@@ -65,4 +65,11 @@ app.use("/api/user", usersRouter);
 //   res.sendFile(__dirname + "/public/index.html");
 // });
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 module.exports = app;
