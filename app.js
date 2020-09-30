@@ -32,10 +32,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    // secret: process.env.SESSION_SECRET,
+    // resave: true,
+    // saveUninitialized: true,
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    // secret: process.env.CLOUDINARY_SECRET,
+    cookie: {
+      maxAge: 1200000000000000,
+    }, // in millisec
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60, // 1 day
+    }),
     saveUninitialized: true,
+    resave: true,
   })
 );
 
